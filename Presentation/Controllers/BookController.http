@@ -1,0 +1,11 @@
+GET http://localhost:8080/book?searchTerm=&available=
+
+GET http://localhost:8080/book/:id
+
+GET http://localhost:8080/book/stats
+
+POST http://localhost:8080/book
+
+PATCH http://localhost:8080/book/:id
+
+DELETE http://localhost:8080/book/:id

@@ -1,0 +1,5 @@
+GET http://localhost:8080/loan/stats
+
+POST http://localhost:8080/loan
+
+PATCH http://localhost:8080/loan/:id

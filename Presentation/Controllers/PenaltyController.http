@@ -1,0 +1,4 @@
+POST http://localhost:8080/penalty/:id/end
+status=paid|closed
+
+DELETE http://localhost:8080/penalty/:id
