@@ -91,8 +91,6 @@
 
 # Flux des Données - Exemple : Affichage des Livres
 
-StackEdit stores your files in your browser, which means all your files are automatically saved locally and are accessible **offline!**
-
 ## Etapes du Flux
 
 Fonctionnalité : **"Afficher la liste des livres"**.
