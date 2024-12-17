@@ -88,3 +88,38 @@
     └───Middlewares
             AuthenticationMiddleware.ts 
 ```
+
+# Flux des Données - Exemple : Affichage des Livres
+
+StackEdit stores your files in your browser, which means all your files are automatically saved locally and are accessible **offline!**
+
+## Etapes du Flux
+
+Fonctionnalité : **"Afficher la liste des livres"**.
+
+### Requête HTTP :
+
+> Un client envoie une requête `GET /books` au **BookController**.
+
+
+### Controller :
+
+> `BookController` appelle `BookService` pour récupérer les livres.
+
+### Repository :
+
+> `BookRepository` récupère les données via une requête à la base de données ou API.
+
+### Mapper :
+
+> `BookMapper` transforme les données **persistées** (`BookModel`) en entités **Domaine** (`Book`).
+
+### Retour des Données:
+
+> Les entités sont converties en **DTOs** via `BookAdapter` pour être renvoyées au client.
+
+## Schéma simplifié 
+
+```
+Client → BookController → BookService → IBookRepository → BookRepository → BookAdapter  → BookMapper
+```
