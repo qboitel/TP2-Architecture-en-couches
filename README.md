@@ -122,7 +122,7 @@ Fonctionnalité : **"Création d'un emprunt"**.
 
 > `LoanController` mappe les données en DTO via LoanAdapter et retourne le Loan créé au client.
 
-## Flux de données
+## Diagramme acyclique des dépendances
 
 ![image](https://github.com/user-attachments/assets/6153d38c-529d-4dbc-a986-2e18155e9c80)
 
