@@ -124,9 +124,8 @@ Fonctionnalité : **"Création d'un emprunt"**.
 
 ## Flux de données
 
-```
-Client → BookController → BookAdapter -> BookService → BookRepository (via IBookRepository) → BookMapper -> BookService -> BookController -> BookAdapter -> Client
-```
+![image](https://github.com/user-attachments/assets/6153d38c-529d-4dbc-a986-2e18155e9c80)
+
 
 #  Règles Métier Implémentées
 
