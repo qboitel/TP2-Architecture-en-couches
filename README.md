@@ -122,7 +122,7 @@ Fonctionnalité : **"Afficher la liste des livres"**.
 Client → BookController → BookService → IBookRepository → BookRepository → BookAdapter  → BookMapper
 ```
 
-##  Règles Métier Implémentées
+#  Règles Métier Implémentées
 
 Voici quelques exemples de règles métier implémentées :
 
