@@ -18,7 +18,7 @@
 
 ### Persistance : 
  - Description: Gère la persistance des données et la communication avec les services externes ; elle contient les détails d'implémentation de ceux-ci.
- - Role: Accès aux Données (Repository), Mapping (Mapper), Model Metier (Models), Appels à des API tierces (peut être sorti dans une couche "Infrastructure").
+ - Role: Accès aux Données (Repository), Mapping (Mapper), Modèles de données (Models), Appels à des API tierces (peut être sorti dans une couche "Infrastructure").
 
 ### Arborescence :
 
