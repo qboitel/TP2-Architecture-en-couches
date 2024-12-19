@@ -1,25 +1,24 @@
-
 # ArchiLivre
 
 4 couches Applicatives 
 
 ## Description des couches et leur rôle
 
-### Application : 
- - Description: met en œuvre et coordonne la logique de traitement et d’interaction, en contrôlant le flux de données entre les autres couches. Également connue sous le nom de couche de logique métier, cette couche est responsable de la gestion des opérations, des règles et des flux de travail de l'application
- - Role: Orchestration(Services), Gestion des Transactions(Contracts),logique spécifique à l'app(Services)
+### Presentation : 
+-  Description: Contient l'ensemble des interfaces utilisateur ou, dans le cas d'une API, contient les controllers et représente une couche tampon entre les règles métier et l'extérieur.
+-  Role: Gestion des entrées et autorisation (Middleware), Validation des entrées (DTO), Transformation (Adapter), Réponses, Points d'entrée (Controllers)...
 
-### Domaine : 
- - Description: logique métier 
- - Role: Règles/logique Métier, validation métier, cohérence des données
+### Application : 
+ - Description: Contient l'ensemble des règles métier de l'application. Elle manipule les entités de la couche Domain et fait appel aux repositories afin de persister les données via la couche de Persistance.
+ - Role: Interfaces du communication avec les couches inférieures (Contracts), Exécution des règles métier(Services)
+
+### Domaine :  
+ - Description : Contient l'ensemble des entités métier, value objects, agrégats... manipulés par la couche Application. Couche ayant le plus haut niveau d'abstraction dans l'app.
+ - Role: Isole les entités métier du reste de l'application.
 
 ### Persistance : 
- - Description:gère les interactions et les communications avec les systèmes de stockage de données, tels que les bases de données et les services externes, en séparant les moyens par lesquels les données sont obtenues, stockées et mises à jour du reste de l'application.
- - Role: Accès aux Données(Repository), Mapping(Mapper), Model Metier(Models)
-
-### Presentation : 
--  Description: fournit l'interface utilisateur, affichant les données aux utilisateurs finaux et rassemblant leurs entrées.
--  Role: Gestion des entrées (Middleware), Validation des entrées(DTO), Transformation(Adapter), Réponse
+ - Description: Gère la persistance des données et la communication avec les services externes ; elle contient les détails d'implémentation de ceux-ci.
+ - Role: Accès aux Données (Repository), Mapping (Mapper), Model Metier (Models), Appels à des API tierces (peut être sorti dans une couche "Infrastructure").
 
 ### Arborescence :
 
@@ -95,39 +94,58 @@
 
 ### Etapes du Flux
 
-Fonctionnalité : **"Afficher la liste des livres"**.
+Fonctionnalité : **"Création d'un emprunt"**.
 
 ### Requête HTTP :
 
-> Un client envoie une requête `GET /books` au **BookController**.
+> Un client envoie une requête `POST /loan` au **LoanController** avec les donnéees requises dans le corps de la requête.
 
+### Presentation :
 
-### Controller :
+> `LoanController` mappe les données d'entrée en Loan via LoanAdapter et appelle `LoanService`.
 
-> `BookController` appelle `BookService` pour récupérer les livres.
+### Application :
 
-### Repository :
+> `LoanService` récupère les données et applique des règles métier, comme vérifier si l'utilisateur n'emprunte pas déjà 5 livres.
+> Le service construit un objet Loan de la couche Domain et l'envoie au `LoanRepository`.
 
-> `BookRepository` récupère les données via une requête à la base de données ou API.
+### Persistance :
 
-### Mapper :
+> `LoanRepository` mappe Loan et LoanModel puis persiste celui-ci en base de données.
+> Le repository mappe LoanModel en Loan via `LoanMapper` et le retourne à `LoanService`.
 
-> `BookMapper` transforme les données **persistées** (`BookModel`) en entités **Domaine** (`Book`).
+### Application :
 
-### Retour des Données:
+> `LoanService` retourne les données au controller.
 
-> Les entités sont converties en **DTOs** via `BookAdapter` pour être renvoyées au client.
+### Presentation :
 
-## Schéma simplifié 
+> `LoanController` mappe les données en DTO via LoanAdapter et retourne le Loan créé au client.
+
+## Flux de données
 
 ```
-Client → BookController → BookService → IBookRepository → BookRepository → BookAdapter  → BookMapper
+Client → BookController → BookAdapter -> BookService → BookRepository (via IBookRepository) → BookMapper -> BookService -> BookController -> BookAdapter -> Client
 ```
 
-#  Règles métier implémentées
+#  Règles Métier Implémentées
 
-Voici les règles métier implémentées :
+Voici quelques exemples de règles métier implémentées :
+
+### Gestion des Livres :
     
-    - Un livre ne peut pas être emprunté s’il est déjà emprunté.
-    - Les pénalités sont calculées sur la base d’un retard quotidien (ex. 1€ par jour de retard).
-    - Chaque utilisateur peut emprunter jusqu’à 3 livres en même temps.
+    -   Un livre ne peut pas être supprimé s'il est actuellement emprunté.
+    -   Un livre doit avoir un titre, un auteur, et un nombre d'exemplaires > 0.
+    
+### Gestion des Emprunts :
+    
+    -   Un utilisateur ne peut emprunter plus de 5 livres simultanément.
+    -   La durée maximale d'un emprunt est de 14 jours.
+### Gestion des Pénalités :
+    
+    -   Si un utilisateur rend un livre en retard, une pénalité est appliquée.
+    -   Le montant de la pénalité est proportionnel au nombre de jours de retard.
+### Authentification :
+    
+    -   Seuls les utilisateurs authentifiés peuvent effectuer des emprunts.
+    -   Un middleware `AuthenticationMiddleware` vérifie les jetons d'accès.
