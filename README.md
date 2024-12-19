@@ -124,24 +124,10 @@ Fonctionnalité : **"Afficher la liste des livres"**.
 Client → BookController → BookService → IBookRepository → BookRepository → BookAdapter  → BookMapper
 ```
 
-#  Règles Métier Implémentées
+#  Règles métier implémentées
 
-Voici quelques exemples de règles métier implémentées :
-
-### Gestion des Livres :
+Voici les règles métier implémentées :
     
-    -   Un livre ne peut pas être supprimé s'il est actuellement emprunté.
-    -   Un livre doit avoir un titre, un auteur, et un nombre d'exemplaires > 0.
-    
-### Gestion des Emprunts :
-    
-    -   Un utilisateur ne peut emprunter plus de 5 livres simultanément.
-    -   La durée maximale d'un emprunt est de 14 jours.
-### Gestion des Pénalités :
-    
-    -   Si un utilisateur rend un livre en retard, une pénalité est appliquée.
-    -   Le montant de la pénalité est proportionnel au nombre de jours de retard.
-### Authentification :
-    
-    -   Seuls les utilisateurs authentifiés peuvent effectuer des emprunts.
-    -   Un middleware `AuthenticationMiddleware` vérifie les jetons d'accès.
+    - Un livre ne peut pas être emprunté s’il est déjà emprunté.
+    - Les pénalités sont calculées sur la base d’un retard quotidien (ex. 1€ par jour de retard).
+    - Chaque utilisateur peut emprunter jusqu’à 3 livres en même temps.
