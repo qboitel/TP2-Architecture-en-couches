@@ -90,7 +90,7 @@
             AuthenticationMiddleware.ts 
 ```
 
-## Flux des Données - Exemple : Affichage des Livres
+## Flux des Données - Exemple : Création d'un emprunt
 
 ### Etapes du Flux
 
