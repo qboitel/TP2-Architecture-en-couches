@@ -3,7 +3,7 @@
 
 4 couches Applicatives 
 
-## La description des couches et leur rôle.
+## Description des couches et leur rôle
 
 ### Application : 
  - Description: met en œuvre et coordonne la logique de traitement et d’interaction, en contrôlant le flux de données entre les autres couches. Également connue sous le nom de couche de logique métier, cette couche est responsable de la gestion des opérations, des règles et des flux de travail de l'application
